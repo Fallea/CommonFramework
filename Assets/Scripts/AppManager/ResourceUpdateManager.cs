@@ -3,7 +3,7 @@ using System.Collections;
 
 /*******************************************************************************
  * 
- *             类名: ResourcesUpdateManager
+ *             类名: ResourceUpdateManager
  *             功能: 资源更新管理
  *             作者: HGQ
  *             日期: 2016.4.22
@@ -11,7 +11,7 @@ using System.Collections;
  *             
  * *****************************************************************************/
 
-public class ResourcesUpdateManager : MonoBehaviour {
+public class ResourceUpdateManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
