@@ -3,43 +3,22 @@ using System.Collections;
 
 
 /// 管理器助手类
-public class ManagerAssistant : MonoBehaviour
+public class ManagerAssistant : TSingleton<ManagerAssistant>
 {
+    private ManagerAssistant() { }
 
-    private static ManagerAssistant mInstance;
+    private GameObject assistant = null;
 
-    public static void Init()
+    public void Initialize()
     {
-        if (mInstance == null)
+        if (assistant == null)
         {
-            GameObject go = new GameObject("ManagerAssistant");
-            GameObject.DontDestroyOnLoad(go);
-            mInstance = go.AddComponent<ManagerAssistant>();
+            assistant = new GameObject("ManagerAssistant");
+            GameObject.DontDestroyOnLoad(assistant);
         }
 
-        AddManager<ResourceUpdateManager>("ResourceUpdateManager");
+        ResourceUpdateManager.Instance.Initialize(assistant);
+        ResourceLoadManager.Instance.Initialize(assistant);
     }
 
-    /// <summary>
-    /// 添加组件管理器
-    /// </summary>
-    static void AddManager<T>(string typeName) where T : Component
-    {
-        GameObject go = new GameObject(typeName);
-        Component component = Tools.GetComponentSafe<T>(go);
-
-        if (component == null) {
-            Debug.LogError("[ManagerAssistant > AddManager > Add Component Failure]");
-        }
-
-        //设置管理器父级
-        if (mInstance.gameObject != null)
-        {
-            go.transform.parent = mInstance.gameObject.transform;
-        }
-        else
-        {
-            GameObject.DontDestroyOnLoad(go);
-        }
-    }
 }

@@ -15,15 +15,37 @@ using System.Collections.Generic;
 public class AppMainUpdate : MonoBehaviour
 {
 
-    // Use this for initialization
     void Start()
+    {
+        ManagerAssistant.Instance.Initialize();
+    }
+
+    void Update()
     {
 
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// APP暂停时相应（移动平台退出到后台）
+    /// </summary>
+    /// <param name="paused"></param>
+    void OnApplicationPause(bool paused)
     {
+        if (paused)
+        {
+            Debug.Log("[APP pause]");
+        }
+        else
+        {
+            Debug.Log("[APP resume]");
+        }
+    }
 
+    /// <summary>
+    /// APP结束时调用
+    /// </summary>
+    void OnApplicationQuit()
+    {
+        Debug.Log("[APP End]");
     }
 }

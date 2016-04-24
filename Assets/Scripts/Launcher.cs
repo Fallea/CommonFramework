@@ -15,9 +15,24 @@ using System.Collections;
 public class Launcher : MonoBehaviour
 {
 
-    void Start()
+    void Awake()
     {
-        ManagerAssistant.Init();
+        InitAppMainUpdate();
+    }
+
+    /// <summary>
+    /// 初始化App，并启动APP
+    /// </summary>
+    void InitAppMainUpdate()
+    {
+        string strName = "AppMainUpdate";
+        GameObject main = GameObject.Find(strName);
+        if (main == null)
+        {
+            main = new GameObject(strName);
+            GameObject.DontDestroyOnLoad(main);
+        }
+        Tools.GetComponentSafe<AppMainUpdate>(main);
     }
 
 }

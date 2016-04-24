@@ -11,15 +11,22 @@ using System.Collections;
  *             
  * *****************************************************************************/
 
-public class ResourceLoadManager : MonoBehaviour {
+public class ResourceLoadManager : TManager<ResourceLoadManager>
+{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    void Start()
+    {
+        this.enabled = false;
+    }
+
+
+    void Update()
+    {
+
+    }
+
+    //================================================================
+
+
 }
