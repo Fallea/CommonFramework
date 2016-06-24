@@ -21,7 +21,7 @@ public class Launcher : MonoBehaviour
     }
 
     /// <summary>
-    /// 初始化App，并启动APP
+    /// 初始化App，并启动App
     /// </summary>
     void InitAppMainUpdate()
     {

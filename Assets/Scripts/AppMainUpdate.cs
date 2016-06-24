@@ -33,11 +33,11 @@ public class AppMainUpdate : MonoBehaviour
     {
         if (paused)
         {
-            Debug.Log("[APP pause]");
+            Debug.Log("[App Pause]");
         }
         else
         {
-            Debug.Log("[APP resume]");
+            Debug.Log("[App Resume]");
         }
     }
 
@@ -46,6 +46,6 @@ public class AppMainUpdate : MonoBehaviour
     /// </summary>
     void OnApplicationQuit()
     {
-        Debug.Log("[APP End]");
+        Debug.Log("[App End]");
     }
 }

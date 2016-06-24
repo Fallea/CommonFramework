@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 
 public class Util
 {
+
     public static int Int(object o)
     {
         return Convert.ToInt32(o);
