@@ -42,6 +42,7 @@ public class AssetBundleAssetLoader : AssetLoader
         if (mLoaded == null)
         {
             mLoaded = AssetBundleManager.Instance.GetLoadedAssetBundle(mAssetBundleName);
+            Debug.Log(">> Load > HashCode > " + mLoaded.GetHashCode());
         }
     }
 

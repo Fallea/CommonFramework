@@ -99,6 +99,7 @@ public class ResourceLoadManager : TManager<ResourceLoadManager>
         {
             if (callback != null)
             {
+                Debug.Log("Check > " + key);
                 callback.Invoke(obj as T);
             }
         }

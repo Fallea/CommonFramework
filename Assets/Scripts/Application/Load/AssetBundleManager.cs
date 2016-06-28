@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR	
+using UnityEditor;
+#endif
 
 /*******************************************************************************
  * 
@@ -29,6 +32,7 @@ public class AssetBundleManager : TSingleton<AssetBundleManager>
         if (loadedBundles.ContainsKey(assetBundleName))
         {
             loadedBundles[assetBundleName].referencedCount++;
+            Debug.Log(">> AssetBundleManager > " + assetBundleName + " > referencedCount > " + loadedBundles[assetBundleName].referencedCount);
             return loadedBundles[assetBundleName];
         }
         LoadedAssetBundle lab = new LoadedAssetBundle(bundlePath + assetBundleName);
@@ -41,20 +45,20 @@ public class AssetBundleManager : TSingleton<AssetBundleManager>
     {
         AssetLoader loader = null;
 #if UNITY_EDITOR
-        //if (SimulateAssetBundleInEditor)
-        //{
-        //    string[] assetPaths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName, assetName);
-        //    if (assetPaths.Length == 0)
-        //    {
-        //        Debug.LogError("There is no asset with name \"" + assetName + "\" in " + assetBundleName);
-        //        return null;
-        //    }
-
-        //    // @TODO: Now we only get the main object from the first asset. Should consider type also.
-        //    Object target = AssetDatabase.LoadMainAssetAtPath(assetPaths[0]);
-        //    operation = new AssetBundleLoadAssetOperationSimulation(target);
-        //}
-        //else
+        if (SimulateAssetBundleInEditor)
+        {
+            assetBundleName = assetBundleName.ToLower();
+            string[] assetPaths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName, assetName);
+            if (assetPaths.Length == 0)
+            {
+                Debug.LogError("There is no asset with name \"" + assetName + "\" in " + assetBundleName);
+                return null;
+            }
+            // @TODO: Now we only get the main object from the first asset. Should consider type also.
+            Object obj = AssetDatabase.LoadMainAssetAtPath(assetPaths[0]);
+            loader = new AssetBundleSimulationLoader(obj);
+        }
+        else
 #endif
         {
             //LoadAssetBundle(assetBundleName);
@@ -66,6 +70,35 @@ public class AssetBundleManager : TSingleton<AssetBundleManager>
         return loader;
     }
 
+    //================================================================
 
+    private static int mSimulateAssetBundleInEditor = -1;
+    private const string SIMULATE_ASSETBUNDLE = "SimulateAssetBundle";
+
+    public static bool SimulateAssetBundleInEditor
+    {
+        get
+        {
+
+#if UNITY_EDITOR
+            if (mSimulateAssetBundleInEditor == -1)
+            {
+                mSimulateAssetBundleInEditor = EditorPrefs.GetBool(SIMULATE_ASSETBUNDLE, true) ? 1 : 0;
+            }
+#endif
+            return mSimulateAssetBundleInEditor != 0;
+        }
+        set
+        {
+            int newValue = value ? 1 : 0;
+            if (newValue != mSimulateAssetBundleInEditor)
+            {
+                mSimulateAssetBundleInEditor = newValue;
+#if UNITY_EDITOR
+                EditorPrefs.SetBool(SIMULATE_ASSETBUNDLE, value);
+#endif
+            }
+        }
+    }
 
 }
