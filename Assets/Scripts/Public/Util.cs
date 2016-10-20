@@ -35,6 +35,11 @@ public class Util
         return UnityEngine.Random.Range(min, max);
     }
 
+
+    //================================================================
+    //======时间日期相关======
+    //================================================================
+
     public static long GetTime()
     {
         TimeSpan ts = new TimeSpan(DateTime.UtcNow.Ticks - new DateTime(1970, 1, 1, 0, 0, 0).Ticks);
