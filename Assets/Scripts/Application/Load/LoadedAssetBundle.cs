@@ -22,7 +22,7 @@ public class LoadedAssetBundle
 
     public LoadedAssetBundle(string assetBundlePath)
     {
-        mLoadWWW = new WWW(Assets.AssetBundleUrlPath + assetBundlePath);
+        mLoadWWW = new WWW(assetBundlePath);
     }
 
     public bool IsDone()

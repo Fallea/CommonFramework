@@ -2,61 +2,81 @@
 
 public class Assets
 {
+    public const string SUFFIX = ".assetbundle";
+
     //注：所有目录的使用最后都会带“/”，使用时不需在前面添加
 
-    public const string SUFFIX = ".assetbundle";
+    static Assets()
+    {
+        //if (Application.platform == RuntimePlatform.Android)
+        //{
+        //    path = "jar:file://" + Application.dataPath + "!/assets/";
+        //}
+        //else if (Application.platform == RuntimePlatform.IPhonePlayer)
+        //{
+        //    path = Application.dataPath + "/Raw/";
+        //}
+        //else
+        //{
+        //    path = Application.dataPath + "/StreamingAssets/";
+        //}
+
+        // StreamingAssets Path
+        StreamingAssetsPath = Application.streamingAssetsPath + "/";
+
+        // StreamingAssets Url Path
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            StreamingAssetsUrlPath = StreamingAssetsPath;
+        }
+        else
+        {
+            StreamingAssetsUrlPath = "file:///" + StreamingAssetsPath;
+        }
+
+        //RuntimeAssets Path
+        RuntimeAssetsPath = Application.persistentDataPath + "/";
+
+        //AssetBundle Url Path
+        RuntimeAssetsUrlPath = "file:///" + RuntimeAssetsPath;
+    }
+
 
     /// <summary>
     /// 资源包目录，指StreamingAssets的路径
     /// </summary>
-    public static string AssetsPath
+    public static string StreamingAssetsPath
     {
-        get
-        {
-            string path = string.Empty;
-
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                path = "jar:file://" + Application.dataPath + "!/assets/";
-            }
-            else if (Application.platform == RuntimePlatform.IPhonePlayer)
-            {
-                path = Application.dataPath + "/Raw/";
-            }
-            else
-            {
-                path = Application.dataPath + "/StreamingAssets/";
-            }
-            return path;
-        }
+        get;
+        private set;
     }
 
     /// <summary>
-    /// 运行时资源路径，资源拷贝和下载存放的路径，也是运行时资源读取的路径
+    /// 资源包目录，指StreamingAssets路径并能使用WWW加载
+    /// </summary>
+    public static string StreamingAssetsUrlPath
+    {
+        get;
+        private set;
+    }
+
+    /// <summary>
+    /// 运行时资源路径，资源拷贝和下载存放的路径，指Application.persistentDataPath路径
     /// </summary>
     public static string RuntimeAssetsPath
     {
-        get
-        {
-            string appName = "App";
-            if (Application.isMobilePlatform)
-            {
-                return Application.persistentDataPath + "/" + appName + "/";
-            }
-            return Application.dataPath + "/StreamingAssets/";
-        }
-    }
-    /// <summary>
-    /// 获得运行时资源包的路径（本地资源），AssetBundle读取路径，即路径前面添加了file://
-    /// </summary>
-    /// <returns></returns>
-    public static string AssetBundleUrlPath
-    {
-        get
-        {
-            return "file://" + RuntimeAssetsPath;
-        }
+        get;
+        private set;
     }
 
+    /// <summary>
+    /// 运行时资源路径，资源拷贝和下载存放的路径，指Application.persistentDataPath路径，并能使用WWW加载
+    /// </summary>
+    /// <returns></returns>
+    public static string RuntimeAssetsUrlPath
+    {
+        get;
+        private set;
+    }
 
 }
